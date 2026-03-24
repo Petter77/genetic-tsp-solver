@@ -3,8 +3,6 @@
 
 #include "stdbool.h"
 
-#define MAX_CITIES 10
-
 typedef struct {
     bool random;
     int num_of_cities;

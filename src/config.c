@@ -1,5 +1,4 @@
 #include "../include/config.h"
-#include "stdio.h"
 #include "../include/log.h"
 
 config_t config_default(void) {
@@ -17,7 +16,7 @@ config_t config_parse (int argc, char *argv[]) {
         LOG_INFO("Initializing config with default parameters");
         config = config_default();
     } else {
-       printf("Initializing config from given data"); 
+       LOG_INFO("Initializing config from given data"); 
     }
 
     return config;
