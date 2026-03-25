@@ -1,5 +1,5 @@
 CC      = gcc
-CFLAGS  = -Wall -Wextra -g -Iinclude
+CFLAGS  = -Wall -Wextra -g -Iinclude -fsanitize=address
 TARGET  = build/program
  
 SRC     = $(wildcard src/*.c)
