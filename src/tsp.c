@@ -18,7 +18,7 @@ int *fill_matrix_random(int n) {
             if (i == j)
                 arr[i * n + j] = 0;
             else
-                arr[i * n + j] = rand() % 100 + 1;
+                arr[i * n + j] = arc4random_uniform(100) + 1;
         }
     }
 
