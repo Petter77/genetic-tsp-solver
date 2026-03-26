@@ -4,7 +4,9 @@
 config_t config_default(void) {
     config_t config = {
         .num_of_cities = 10,
-        .random = true
+        .random = true,
+        .population_size = 1000,
+        .tournament_size = 3
     };
 
     return config;

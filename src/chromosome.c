@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 int compute_fitness(const uint8_t *cities, const tsp_t *tsp) {
     int sum = 0;
@@ -24,14 +25,16 @@ void shuffle (uint8_t *arr, int num_of_cities) {
     }
 }
 
-chromosome_t chromosome_init_random (const tsp_t *tsp) {
-    chromosome_t chr;
-    chr.cities = malloc(sizeof(uint8_t) * tsp->num_of_cities);
+chromosome_t *chromosome_init_random (const tsp_t *tsp) {
+    chromosome_t *chr = malloc(sizeof(chromosome_t));
+    chr->cities = malloc(sizeof(uint8_t) * tsp->num_of_cities);
     for (uint8_t i = 0; i < tsp->num_of_cities; i++) {
-        chr.cities[i] = i;
+        chr->cities[i] = i;
     }
-    shuffle(chr.cities, tsp->num_of_cities);
-    chr.fitness = compute_fitness(chr.cities, tsp);
+    chr->length = tsp->num_of_cities;
+
+    shuffle(chr->cities, tsp->num_of_cities);
+    chr->fitness = compute_fitness(chr->cities, tsp);
     return chr;
 }
 
@@ -47,6 +50,14 @@ void chromosome_mutate (chromosome_t *chromosome, int num_of_cities) {
 }
 */
 
-void chromosome_free (chromosome_t chr) {
-    free(chr.cities);
+void chromosome_free (chromosome_t *chr) {
+    free(chr->cities);
+    free(chr);
+}
+
+void chromosome_print (const chromosome_t *chr) {
+    for (int i = 0; i < chr->length; i++) {
+        printf("%d", chr->cities[i]);
+    }
+    printf("\n");
 }
