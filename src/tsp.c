@@ -3,21 +3,23 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
 #include <stdlib.h>
 
 void dist_arr_free(tsp_t *tsp) {
     free(tsp->dist_arr_ptr);
+    tsp->dist_arr_ptr = NULL;
 }
 
 int *fill_matrix_random(int n) {
-    int size = n * (n - 1) / 2;
-    int *arr = malloc(size * sizeof(int));
+    int *arr = malloc(n * n * sizeof(int));
 
-    srand(time(NULL));
-
-    for (int i = 0; i < size; i++) {
-        arr[i] = rand() % 100 + 1;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i == j)
+                arr[i * n + j] = 0;
+            else
+                arr[i * n + j] = rand() % 100 + 1;
+        }
     }
 
     return arr;

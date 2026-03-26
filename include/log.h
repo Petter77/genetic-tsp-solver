@@ -1,7 +1,7 @@
 #ifndef LOG_H
 #define LOG_H
 
-#include "stdio.h"
+#include <stdio.h>
 
 #define LOG_INFO(fmt, ...)  fprintf(stderr, "[INFO]  " fmt "\n", ##__VA_ARGS__)
 #define LOG_OK(fmt, ...) fprintf(stderr, "[OK] " fmt "\n", ##__VA_ARGS__)

@@ -10,9 +10,7 @@ typedef struct {
 } tsp_t;
 
 static inline int dist_get(const tsp_t *tsp, int i, int j) {
-    if (i == j) { return 0; }
-    if (i < j) { int tmp = i; i = j; j = tmp; }
-    return tsp->dist_arr_ptr[i * (i - 1) / 2 + j];
+    return tsp->dist_arr_ptr[i * tsp->num_of_cities + j];
 }
 
 
