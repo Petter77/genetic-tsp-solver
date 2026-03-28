@@ -1,5 +1,6 @@
 #include "../include/chromosome.h"
 #include "../include/tsp.h"
+#include "../include/population.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -38,13 +39,50 @@ chromosome_t *chromosome_init_random (const tsp_t *tsp) {
     return chr;
 }
 
-/*
-chromosome_t chromosome_crossover ( const chromosome_t *parent_a, 
-                                    const chromosome_t *parent_b,
-                                    int num_of_cities) {
-
+chromosome_t *tournament_select(const population_t *pop) {
+    chromosome_t *candidates[pop->tournament_size];
+    
+    for (int i = 0; i < pop->tournament_size; i++) {
+        chromosome_t *candidate;
+        bool unique;
+        
+        do {
+            unique = true;
+            int idx = arc4random_uniform(pop->size);
+            candidate = pop->arr[idx];
+            
+            for (int j = 0; j < i; j++) {
+                if (candidates[j] == candidate) {
+                    unique = false;
+                    break;
+                }
+            }
+        } while (!unique);
+        
+        candidates[i] = candidate;
+    }
+    
+    chromosome_t *best = candidates[0];
+    for (int i = 1; i < pop->tournament_size; i++) {
+        if (candidates[i]->fitness < best->fitness)
+            best = candidates[i];
+    }
+    
+    return best;
 }
 
+
+chromosome_t chromosome_crossover (population_t *pop) {
+    chromosome_t *parent_a = tournament_select(pop);   
+    chromosome_t *parent_b = NULL;
+    do {
+        chromosome_t *parent_b = tournament_select(pop);
+    } while (parent_a == parent_b);
+
+    chromosome_t child;
+    return child;
+}
+/*
 void chromosome_mutate (chromosome_t *chromosome, int num_of_cities) {
 
 }

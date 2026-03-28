@@ -4,7 +4,7 @@
 #include "chromosome.h"
 #include "config.h"
 
-typedef struct {
+typedef struct population_s{
     int size;
     int tournament_size;
     chromosome_t **arr;
