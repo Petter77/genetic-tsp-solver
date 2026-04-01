@@ -6,7 +6,7 @@ A genetic algorithm implementation for solving the **Asymmetric Travelling Sales
 
 The Travelling Salesman Problem asks: given a set of cities and distances between them,
 what is the shortest route that visits each city exactly once and returns to the origin?
-This implementation targets the **asymmetric** variant, where dist(A→B) ≠ dist(B→A).
+This implementation targets the **asymmetric** variant, where dist(A->B) =/= dist(B->A).
 
 ## Algorithm Overview
 
@@ -65,7 +65,7 @@ make fclean   # remove entire build directory
 
 ## Status
 
-🚧 **Actively developed**
+**Actively developed**
 
 - [x] Random population initialization
 - [x] Tournament selection
