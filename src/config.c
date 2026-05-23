@@ -6,7 +6,8 @@ config_t config_default(void) {
         .num_of_cities = 10,
         .random = true,
         .population_size = 1000,
-        .tournament_size = 3
+        .tournament_size = 3,
+        .generations = 100
     };
 
     return config;

@@ -15,9 +15,9 @@ typedef struct {
 
 chromosome_t *chromosome_init_random (const tsp_t *tsp);
 
-chromosome_t chromosome_crossover (population_t *pop);
+chromosome_t *chromosome_crossover (const population_t *pop, const tsp_t *tsp);
 
-void chromosome_mutate (chromosome_t *chromosome, int num_of_cities);
+void chromosome_mutate(chromosome_t *chromosome, const tsp_t *tsp);
 void chromosome_free (chromosome_t *chr);
 
 void chromosome_print (const chromosome_t *chr);

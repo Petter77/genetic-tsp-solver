@@ -79,17 +79,12 @@ chromosome_t *tournament_select(const population_t *pop) {
 }
 
 
-chromosome_t chromosome_crossover (population_t *pop) {
+chromosome_t *chromosome_crossover (const population_t *pop, const tsp_t *tsp) {
     chromosome_t *parent_a = tournament_select(pop);   
     chromosome_t *parent_b = NULL;
     do {
         parent_b = tournament_select(pop);
     } while (parent_a == parent_b);
-
-    printf("Parent A:\n");
-    chromosome_print(parent_a);
-    printf("Parent B:\n");
-    chromosome_print(parent_b);
 
     uint8_t cut1 = arc4random_uniform(parent_a->length - 2) + 1;
     uint8_t cut2;
@@ -98,30 +93,28 @@ chromosome_t chromosome_crossover (population_t *pop) {
     } while (cut2 == cut1 || abs(cut2 - cut1) < 2);
 
     if (cut1 > cut2) { uint8_t tmp = cut1; cut1 = cut2; cut2 = tmp; }
-    printf("Cut 1: %d\n", cut1);
-    printf("Cut 2: %d\n", cut2);
 
-    chromosome_t child;
-    child.length = parent_a->length;
-    child.cities = malloc(sizeof(uint8_t) * child.length);
-    child.fitness = 0;
+    chromosome_t *child = malloc(sizeof(chromosome_t));
+    child->length = parent_a->length;
+    child->cities = malloc(sizeof(uint8_t) * child->length);
+    child->fitness = 0;
 
-    for (int i = 0; i < child.length; i++) {
-        child.cities[i] = 255;
+    for (int i = 0; i < child->length; i++) {
+        child->cities[i] = 255;
     }
 
     for (uint8_t i = cut1; i <= cut2; i++) {
-        child.cities[i] = parent_a->cities[i];
+        child->cities[i] = parent_a->cities[i];
     }
 
-    uint8_t missing = (child.length - (cut2 - cut1) - 1);
+    uint8_t missing = (child->length - (cut2 - cut1) - 1);
     uint8_t missing_arr[missing];
 
     int missing_index = 0;
-    for (int i = 0; i < child.length; i++) {
+    for (int i = 0; i < child->length; i++) {
         bool present = false;
-        for (int j = 0; j < child.length; j++) {
-            if (parent_b->cities[i] == child.cities[j]) {
+        for (int j = 0; j < child->length; j++) {
+            if (parent_b->cities[i] == child->cities[j]) {
                 present = true;
                 break;
             }
@@ -132,23 +125,30 @@ chromosome_t chromosome_crossover (population_t *pop) {
         }
     }
     for (int j = 0; j < missing; j++) {
-        for (int i = 0; i < child.length; i++){
-            if (child.cities[i] == 255) {
-                child.cities[i] = missing_arr[j];
+        for (int i = 0; i < child->length; i++){
+            if (child->cities[i] == 255) {
+                child->cities[i] = missing_arr[j];
                 break;
             }
         }
     }
 
-    printf("child:\n");
-    chromosome_print(&child);
+    chromosome_mutate(child, tsp);
     return child;
 }
-/*
-void chromosome_mutate (chromosome_t *chromosome, int num_of_cities) {
 
+void chromosome_mutate(chromosome_t *chromosome, const tsp_t *tsp) {
+    uint8_t i = arc4random_uniform(chromosome->length - 1) + 1;
+    uint8_t j;
+    do {
+        j = arc4random_uniform(chromosome->length - 1) + 1;
+    } while (i == j);
+
+    uint8_t tmp = chromosome->cities[i];
+    chromosome->cities[i] = chromosome->cities[j];
+    chromosome->cities[j] = tmp;
+    chromosome->fitness = compute_fitness(chromosome->cities, tsp);
 }
-*/
 
 void chromosome_free (chromosome_t *chr) {
     free(chr->cities);

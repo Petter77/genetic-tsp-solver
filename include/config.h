@@ -8,6 +8,7 @@ typedef struct {
     int num_of_cities;
     int population_size;
     int tournament_size;
+    int generations;
 
 } config_t;
 
