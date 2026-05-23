@@ -3,11 +3,11 @@
 
 config_t config_default(void) {
     config_t config = {
-        .num_of_cities = 10,
+        .num_of_cities = 13,
         .random = true,
         .population_size = 1000,
         .tournament_size = 3,
-        .generations = 100
+        .generations = 1000
     };
 
     return config;

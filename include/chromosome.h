@@ -21,4 +21,5 @@ void chromosome_mutate(chromosome_t *chromosome, const tsp_t *tsp);
 void chromosome_free (chromosome_t *chr);
 
 void chromosome_print (const chromosome_t *chr);
+int compute_fitness(const uint8_t *cities, const tsp_t *tsp);
 #endif

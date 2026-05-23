@@ -25,7 +25,7 @@ population_t population_new(const tsp_t *tsp,
     population_t population = {
         .size = pop->size,
         .tournament_size = pop->tournament_size,
-        .arr = malloc(sizeof(chromosome_t) * pop->size)
+        .arr = malloc(sizeof(chromosome_t*) * pop->size)
     };
 
     chromosome_t *elite = best_fitness(pop);
@@ -33,7 +33,11 @@ population_t population_new(const tsp_t *tsp,
 
     for (int i = 1; i < population.size; i++) {
         population.arr[i] = chromosome_crossover(pop, tsp);
+        if (arc4random_uniform(100) < 5) {
+          chromosome_mutate(population.arr[i], tsp);
+        }
     }
+
     return population;
 }
 

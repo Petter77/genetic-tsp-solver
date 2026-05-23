@@ -133,7 +133,7 @@ chromosome_t *chromosome_crossover (const population_t *pop, const tsp_t *tsp) {
         }
     }
 
-    chromosome_mutate(child, tsp);
+    child->fitness = compute_fitness(child->cities, tsp);
     return child;
 }
 
