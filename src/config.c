@@ -3,7 +3,7 @@
 
 config_t config_default(void) {
     config_t config = {
-        .num_of_cities = 13,
+        .num_of_cities = 50,
         .random = true,
         .population_size = 1000,
         .tournament_size = 3,

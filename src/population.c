@@ -19,9 +19,7 @@ population_t population_init (const config_t *config, const tsp_t *tsp) {
     return population;
 }
 
-population_t population_new(const tsp_t *tsp, 
-                            population_t *pop) {
-
+population_t population_new(const tsp_t *tsp, population_t *pop, int mutation_rate) {
     population_t population = {
         .size = pop->size,
         .tournament_size = pop->tournament_size,
@@ -30,17 +28,16 @@ population_t population_new(const tsp_t *tsp,
 
     chromosome_t *elite = best_fitness(pop);
     population.arr[0] = chromosome_copy(elite);
+    two_opt(population.arr[0], tsp);
 
     for (int i = 1; i < population.size; i++) {
         population.arr[i] = chromosome_crossover(pop, tsp);
-        if (arc4random_uniform(100) < 5) {
-          chromosome_mutate(population.arr[i], tsp);
-        }
+        if ((int)arc4random_uniform(100) < mutation_rate)
+            chromosome_mutate(population.arr[i], tsp);
     }
 
     return population;
 }
-
 chromosome_t *chromosome_copy(const chromosome_t *src) {
     chromosome_t *copy = malloc(sizeof(chromosome_t));
     copy->length = src->length;

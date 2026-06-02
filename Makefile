@@ -1,7 +1,7 @@
 CC      = gcc
-CFLAGS  = -Wall -Wextra -g -Iinclude -fsanitize=address
+#CFLAGS  = -Wall -Wextra -g -Iinclude -fsanitize=address
 TARGET  = build/program
- 
+CFLAGS  = -g -O0
 SRC     = $(wildcard src/*.c)
 OBJ     = $(patsubst src/%.c, build/%.o, $(SRC))
  
